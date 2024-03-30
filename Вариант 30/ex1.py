@@ -1,4 +1,15 @@
-
+def first_file_read(file):
+    """
+    возвращает список списков в которыз лежат данные о ноутбуку
+    file :анализируемый файл
+    """
+    devices = []
+    with open(file) as f:
+        for i in f.readlines():
+            e = tuple(i[:-2].split("*"))
+            devices.append(e)
+        devices = devices[1:]
+        return tuple(devices)
 def ram_counter(file : str):
     """
     взвращаеаеь словарей словарей где ключев перого словаря является тип ноутбука а второго количество оперативной памяти а значение кол-во таких ноутбуков
@@ -6,11 +17,8 @@ def ram_counter(file : str):
     """
     notebook_ram= {}
     devices = []
-    with open(file) as f:
-        for i in f.readlines():
-            e = i[:-2].split("*")
-            devices.append((e[2], e[5]))
-        devices = devices[1 : ]
+    for e in first_file_read(file):
+        devices.append((e[2], e[5]))
     for i in devices:
         e = i[0]
         notebook_ram[e] = {}
